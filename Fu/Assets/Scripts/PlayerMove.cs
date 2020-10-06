@@ -24,6 +24,7 @@ public class PlayerMove : moveObject
     /// </summary>
     public LayerMask stairsLayer;
     public bool isCrouch = false;   //是否下蹲
+    private float walkSpeed;      //行走速度
     // Start is called before the first frame update
     private void Start()
     {
@@ -37,6 +38,7 @@ public class PlayerMove : moveObject
     private void Update()
     {
         checkStairs();
+        Animation();
     }
     /// <summary>
     /// 攀爬楼梯函数
@@ -71,6 +73,7 @@ public class PlayerMove : moveObject
         if (hanging!=3)
         {
             base.walk(direction_x);
+            walkSpeed = Mathf.Abs(direction_x);
             if (direction_y != 0 && hanging == 2 && isJump == false)       //当进行垂直移动且在梯子附近且未在跳跃状态可以进入梯子
             {
                 hanging = 3;
@@ -95,7 +98,6 @@ public class PlayerMove : moveObject
                 isCrouch = true;
                 collider2D.size = new Vector2(collider2D.size.x, collider2D.size.y / 2);
                 collider2D.offset = new Vector2(0, -(collider2D.size.y / 2));
-                //animator.SetBool("Crouch", true);
             }
 
         }
@@ -117,7 +119,7 @@ public class PlayerMove : moveObject
             isCrouch = false;
             collider2D.size = new Vector2(collider2D.size.x, collider2D.size.y * 2);
             collider2D.offset = new Vector2(0, 0);
-            animator.SetBool("isCrouch", false);
+            animator.SetBool("Crouch", false);
         }
 
     }
@@ -135,6 +137,7 @@ public class PlayerMove : moveObject
             {
                 hanging = 2;
                 rig.gravityScale = gravity;
+                animator.SetBool("Climb", false);
             }
             
             isJump = true;
@@ -198,5 +201,24 @@ public class PlayerMove : moveObject
             rig.gravityScale = gravity;
         }
 
+    }
+
+    /// <summary>
+    /// 随时改变Animation
+    /// </summary>
+    void Animation()
+    {
+        if (isGround)
+            animator.SetBool("Jump", false);
+        else
+            animator.SetBool("Jump", true);
+        if(hanging == 3)
+            animator.SetBool("Climb", true);
+        if (isCrouch)
+            animator.SetBool("Crouch", true);
+        else
+            animator.SetBool("Crouch", false);
+
+        animator.SetFloat("Walk", walkSpeed);
     }
 }

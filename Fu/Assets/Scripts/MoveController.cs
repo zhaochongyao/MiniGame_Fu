@@ -9,11 +9,11 @@ public class MoveController : MonoBehaviour
     /// <summary>
     /// 主角移动脚本
     /// </summary>
-    PlayerMove playerMove;          
+    PlayerMove playerMove;
     // Start is called before the first frame update
     void Start()
     {
-        playerMove = GetComponent<PlayerMove>(); 
+        playerMove = GetComponent<PlayerMove>();
     }
     /// <summary>
     /// 接收输入信号
@@ -22,7 +22,7 @@ public class MoveController : MonoBehaviour
     {
         float x = Input.GetAxis("Horizontal");
         float y = Input.GetAxis("Vertical");
-        playerMove.walk(x,y);
+        playerMove.walk(x, y);
         if (Input.GetKeyDown(KeyCode.K))
         {
             playerMove.jump();
