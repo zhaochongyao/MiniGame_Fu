@@ -28,7 +28,8 @@ public class PlayerMove : moveObject
     private void Start()
     {
         base.init();
-        animator = GetComponent<Animator>();
+        Animator[] ts = gameObject.GetComponentsInChildren<Animator>();
+        animator = ts[0];
     }
     /// <summary>
     /// 检测是否有可以攀爬的梯子
@@ -94,7 +95,7 @@ public class PlayerMove : moveObject
                 isCrouch = true;
                 collider2D.size = new Vector2(collider2D.size.x, collider2D.size.y / 2);
                 collider2D.offset = new Vector2(0, -(collider2D.size.y / 2));
-                animator.SetBool("isCrouch", true);
+                //animator.SetBool("Crouch", true);
             }
 
         }

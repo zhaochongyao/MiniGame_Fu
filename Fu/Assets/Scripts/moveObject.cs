@@ -77,7 +77,6 @@ public class moveObject : MonoBehaviour
         {
             face = true;
             transform.localScale = new Vector2(1f, 1f);
-
         }
         else if (moveSpeed < 0 && moveAble)
         {
@@ -98,7 +97,7 @@ public class moveObject : MonoBehaviour
     bool isGrounded()
     {
         //三条射线的起始点: 左边,中间,右边
-        Vector2 position1 = transform.position;                                                     
+        Vector2 position1 = new Vector2(transform.position.x,transform.position.y- collider2D.bounds.size.y / 2);                                                     
         Vector2 position2 = new Vector2(position1.x - (collider2D.bounds.size.x / 2), position1.y);
         Vector2 position3 = new Vector2(position1.x + (collider2D.bounds.size.x / 2), position1.y);
         //使用Raycast函数向下检测是否触碰groundLayer层
@@ -108,9 +107,9 @@ public class moveObject : MonoBehaviour
         RaycastHit2D hit2 = Physics2D.Raycast(position2, direction, distance, groundLayer);
         RaycastHit2D hit3 = Physics2D.Raycast(position3, direction, distance, groundLayer);
         //使用Debug绘制三条射线,方便调试
-        UnityEngine.Debug.DrawRay(position1, new Vector2(0,-distance), Color.green);
-        UnityEngine.Debug.DrawRay(position2, new Vector2(0,-distance), Color.green);
-        UnityEngine.Debug.DrawRay(position3, new Vector2(0,-distance), Color.green);
+        UnityEngine.Debug.DrawRay(position1, new Vector2(0,-distance), Color.red);
+        UnityEngine.Debug.DrawRay(position2, new Vector2(0,-distance), Color.red);
+        UnityEngine.Debug.DrawRay(position3, new Vector2(0,-distance), Color.red);
 
         if (hit1.collider != null || hit2.collider != null || hit3.collider != null)
         {
