@@ -14,7 +14,7 @@ public class gleaner : MonoBehaviour
     /// <summary>
     /// 道具数量数组应与道具数组严格对齐
     /// </summary>
-    private int[] objectNumber;      //道具数量    
+    public int[] objectNumber;      //道具数量    
     // Start is called before the first frame update
     void Start()
     {
@@ -54,6 +54,9 @@ public class gleaner : MonoBehaviour
         //道具使用过后的行为暂时空缺
         //用发出一个直线飞行的炸弹作为demo
         GameObject boom = Instantiate(objects[index], transform.position, Quaternion.identity) as GameObject;
+
+
+        Debug.Log("Player use object");
         if (boom.GetComponent<BoomMove>() != null)
         {
             boom.GetComponent<BoomMove>().face = GetComponent<PlayerMove>().face;
