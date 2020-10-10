@@ -1,4 +1,4 @@
-Shader "MyShader/fogShader"
+﻿Shader "MyShader/fogShader"
 {
     ///迷雾着色器 
     /// 只实现了基础的迷雾和简单的追踪人物,shader用的不太熟练,大家可以一起改一下迷雾追踪主角的方式
