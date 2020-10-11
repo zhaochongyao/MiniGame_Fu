@@ -4,6 +4,12 @@ using System.Collections.Specialized;
 using System.Diagnostics;
 using System.Security.Cryptography;
 using UnityEngine;
+
+/// <summary>
+/// 更新日志 2020.10.10 更新人:赵崇尧
+/// 新增param material 用于战争迷雾,按需要删改
+/// </summary>
+
 /// <summary>
 /// 
 /// 主角移动脚本
@@ -11,6 +17,18 @@ using UnityEngine;
 /// </summary>
 public class PlayerMove : moveObject
 {
+    /// <summary>
+    /// 更新部分
+    /// </summary>
+    /// 
+    public Material material;               //光影材质  用于灯光跟随主角
+    float original_x;               //人物的起始坐标
+    float original_y;
+    /// <summary>
+    /// 更新部分
+    /// </summary>
+
+
 
     private Animator animator;          //动画控制器
     public float gravity = 5.0f;        //重力大小
@@ -19,26 +37,36 @@ public class PlayerMove : moveObject
     public float hanging = 1;    //1.无梯子 2.在梯子范围内  3.在梯子上
     public float test_upWall_length = 1f;    //向上检测墙壁的射线长度
     public float test_stair_length = 0.5f;  //检测左右楼梯的射线长度
+    private float walkSpeed;      //行走速度
+
     /// <summary>
     /// stairsLayer代表梯子层级,用于射线检测梯子
     /// </summary>
     public LayerMask stairsLayer;
     public bool isCrouch = false;   //是否下蹲
-    private float walkSpeed;      //行走速度
     // Start is called before the first frame update
     private void Start()
     {
+        //更新部分
+        original_x = transform.position.x;
+        original_y = transform.position.y;
+        //更新部分
         base.init();
         Animator[] ts = gameObject.GetComponentsInChildren<Animator>();
         animator = ts[0];
     }
     /// <summary>
     /// 检测是否有可以攀爬的梯子
+    /// 更新光影中的光照位置,使它始终跟随主角移动
     /// </summary>
     private void Update()
     {
         checkStairs();
         Animation();
+        //更新部分
+        material.SetFloat("_XScrollLength", original_x-transform.position.x );
+        material.SetFloat("_YScrollLength", original_y - transform.position.y);
+        //更新部分
     }
     /// <summary>
     /// 攀爬楼梯函数
@@ -119,7 +147,7 @@ public class PlayerMove : moveObject
             isCrouch = false;
             collider2D.size = new Vector2(collider2D.size.x, collider2D.size.y * 2);
             collider2D.offset = new Vector2(0, 0);
-            animator.SetBool("Crouch", false);
+            animator.SetBool("isCrouch", false);
         }
 
     }
@@ -212,7 +240,7 @@ public class PlayerMove : moveObject
             animator.SetBool("Jump", false);
         else
             animator.SetBool("Jump", true);
-        if(hanging == 3)
+        if (hanging == 3)
             animator.SetBool("Climb", true);
         if (isCrouch)
             animator.SetBool("Crouch", true);
