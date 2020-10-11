@@ -18,6 +18,7 @@
     {
         Tags {  "Queue" = "Overlay"}
         Blend SrcAlpha OneMinusSrcAlpha                             //透明度混合
+
         Pass
         {
             CGPROGRAM
@@ -53,8 +54,7 @@
                    if (color1.r < 1-_HideRate && color1.g < 1-_HideRate && color1.b < 1-_HideRate) {         //根据遮盖比例调整遮盖部分的rgb值
                        color1.rgb = float3(1-_HideRate, 1-_HideRate, 1-_HideRate);
                    }
-                   half3 result = color1;                                              
-                  
+                   half3 result = color1;     
                    return half4(result, _MaxBlack);
             }
             ENDCG
