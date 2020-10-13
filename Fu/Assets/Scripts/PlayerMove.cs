@@ -27,9 +27,6 @@ public class PlayerMove : moveObject
     /// <summary>
     /// 更新部分
     /// </summary>
-
-
-
     private Animator animator;          //动画控制器
     public float gravity = 5.0f;        //重力大小
     private Transform stairTransform;       //可以攀爬的梯子

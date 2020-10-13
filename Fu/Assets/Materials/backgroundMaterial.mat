@@ -75,6 +75,8 @@ Material:
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
+    - _HideRate: 1
+    - _MaxBlack: 0.85
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
@@ -86,8 +88,8 @@ Material:
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _UVSec: 0
-    - _XScrollLength: 1.4711914
-    - _YScrollLength: -0.11944771
+    - _XScrollLength: 12.34404
+    - _YScrollLength: 103.02051
     - _ZWrite: 1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
