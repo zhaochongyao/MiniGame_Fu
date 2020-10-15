@@ -33,9 +33,7 @@ public class moveObject : MonoBehaviour
     public bool isJump = false;             //是否处于跳跃状态
     protected BoxCollider2D collider2D ;    //物体的碰撞器
     protected Rigidbody2D rig;              //物体的刚体
-    public float jumpForce = 500.0f;        //起跳速度            
-    
-
+    public float jumpForce = 500.0f;        //起跳速度    
     /// <summary>
     /// 初始化组件
     /// </summary>
@@ -119,7 +117,7 @@ public class moveObject : MonoBehaviour
     bool isGrounded()
     {
         //三条射线的起始点: 左边,中间,右边
-        Vector2 position1 = transform.position;                                                     
+        Vector2 position1 = transform.position;   
         Vector2 position2 = new Vector2(position1.x - (collider2D.bounds.size.x / 2), position1.y);
         Vector2 position3 = new Vector2(position1.x + (collider2D.bounds.size.x / 2), position1.y);
         //使用Raycast函数向下检测是否触碰groundLayer层
