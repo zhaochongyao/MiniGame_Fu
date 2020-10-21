@@ -155,8 +155,7 @@ public class PlayerMove : moveObject
     /// </summary>
     public void jump()
     {
-        
-        if ((isGround && !isCrouch)||hanging==3)
+        /*if ((isGround && !isCrouch)||hanging==3)
         {
             if (hanging == 3)
             {
@@ -167,7 +166,8 @@ public class PlayerMove : moveObject
             
             isJump = true;
             rig.AddForce(new Vector2(0, jumpForce));
-        }
+        }*/
+
     }
     /// <summary>
     /// 用射线检测蹲下时头上有无墙

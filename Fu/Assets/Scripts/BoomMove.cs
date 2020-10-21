@@ -31,6 +31,6 @@ public class BoomMove : MonoBehaviour
     IEnumerator Free()
     {
         yield return new WaitForSeconds(3.0f);
-        Destroy(gameObject);
+        //Destroy(gameObject);
     }
 }

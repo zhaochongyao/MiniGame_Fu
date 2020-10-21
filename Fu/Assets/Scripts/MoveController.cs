@@ -30,18 +30,18 @@ public class MoveController : MonoBehaviour
         float x = Input.GetAxis("Horizontal");
         float y = Input.GetAxis("Vertical");
         playerMove.walk(x,y);
-        if (Input.GetKeyDown(KeyCode.K))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             playerMove.jump();
         }
-        if (Input.GetKey(KeyCode.S))
+        /*if (Input.GetKey(KeyCode.S))
         {
             playerMove.crouch();
         }
         else 
         {
             playerMove.overCrouch();
-        }
+        }*/
         ///更新部分
         if (Input.GetKeyDown(KeyCode.J))
         {

@@ -178,7 +178,7 @@ AudioListener:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 361088593}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!20 &361088596
 Camera:
   m_ObjectHideFlags: 0
@@ -247,7 +247,7 @@ GameObject:
   - component: {fileID: 537591270}
   - component: {fileID: 537591269}
   - component: {fileID: 537591271}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -505,6 +505,7 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 4844657849083559650, guid: 005170082574da248be8a6fd3c942aee, type: 3}
     - {fileID: 4844657849083559651, guid: 005170082574da248be8a6fd3c942aee, type: 3}
+    - {fileID: 4844657849083559663, guid: 005170082574da248be8a6fd3c942aee, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 005170082574da248be8a6fd3c942aee, type: 3}
 --- !u!1 &1197793108 stripped
 GameObject:
@@ -542,7 +543,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 512
   test_ground_Length: 1.2
-  move_speed: 5
+  max_MoveSpeed: 5
+  move_acceleration: 10
   isGround: 0
   moveAble: 1
   face: 0
@@ -558,6 +560,22 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   isCrouch: 0
+--- !u!70 &1197793112
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1197793108}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.09118003, y: 0.116047144}
+  m_Size: {x: 1.4562186, y: 2.566956}
+  m_Direction: 0
 --- !u!1 &1371819198
 GameObject:
   m_ObjectHideFlags: 0
