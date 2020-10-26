@@ -172,7 +172,11 @@ public class PlayerMove : moveObject
     /// </summary>
     public void jump()
     {
-        
+        if (!checkGround)
+        {
+            openGroundCheck();
+            isGround = isGrounded();
+        }
         if ((isGround && !isCrouch)||hanging==3)
         {
             if (hanging == 3)
@@ -192,7 +196,7 @@ public class PlayerMove : moveObject
     /// <returns></returns>
     bool upIsWall()
     {
-        Vector2 position1 = transform.position;
+        Vector2 position1 = transform.position+new Vector3(0,transform.position.y/2,0);
         Vector2 direction = Vector2.up;
         float distance = test_upWall_length;
         RaycastHit2D hit = Physics2D.Raycast(position1, direction, distance, groundLayer);
@@ -297,6 +301,7 @@ public class PlayerMove : moveObject
     }
     public void openGroundCheck()
     {
+        UnityEngine.Debug.Log("开启跳跃检测");
         checkGround = true;
     }
 }

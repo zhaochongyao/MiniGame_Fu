@@ -65,7 +65,7 @@ public class gleaner : MonoBehaviour
         objectNumber[index]--;
         //道具使用过后的行为暂时空缺
         //用发出一个直线飞行的炸弹作为demo
-        GameObject boom = Instantiate(objects[index], transform.position, Quaternion.identity) as GameObject;
+        GameObject boom = Instantiate(objects[index], transform.position+new Vector3(0,-transform.position.y/2,0), Quaternion.identity) as GameObject;
         if (boom.GetComponent<BoomMove>() != null)
         {
             BoomMove boomMove = boom.GetComponent<BoomMove>();

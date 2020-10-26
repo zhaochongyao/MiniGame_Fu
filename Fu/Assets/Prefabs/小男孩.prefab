@@ -732,7 +732,6 @@ GameObject:
   - component: {fileID: 4541652428619894844}
   - component: {fileID: 4541652428619894835}
   - component: {fileID: 4541652428619894834}
-  - component: {fileID: 4541652428619894843}
   - component: {fileID: 4541652428619894842}
   m_Layer: 0
   m_Name: "\u5C0F\u7537\u5B69"
@@ -881,33 +880,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9cc88798e544c2c4cb39f162d711df6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &4541652428619894843
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4343827618114877602}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fbb2eeaa1a422d74ba63a2488b74d499, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  p1: {fileID: 6200000, guid: 3dd915c0ca7693e41b3ef056db57a774, type: 2}
-  p2: {fileID: 6200000, guid: e1a2b197592d1894bb285cea396dff28, type: 2}
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 0
-  test_ground_Length: 1.2
-  max_MoveSpeed: 5
-  move_acceleration: 10
-  cur_move_speed: 0
-  checkGround: 1
-  isGround: 0
-  moveAble: 1
-  face: 1
-  isJump: 0
-  jumpForce: 500
 --- !u!114 &4541652428619894842
 MonoBehaviour:
   m_ObjectHideFlags: 0

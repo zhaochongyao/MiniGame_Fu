@@ -148,9 +148,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea541dd31bfc8024da0c3d7fd6585a48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  move_on_x: 6
-  move_height: 2
+  move_on_x: 0
+  move_height: 3
   vertical_acceleration: 5
-  moveSpeed_x: 3
-  moveSpeed_y: 3
+  moveSpeed_x: 0
+  moveSpeed_y: 0
   face: 0

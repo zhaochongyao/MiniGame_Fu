@@ -4,6 +4,7 @@ using UnityEngine;
 /// <summary>
 /// 炸弹运动函数
 /// 抛物线运动
+/// 将地面的tag设置为ground,炸弹将会在碰到地面时停下
 /// </summary>
 public class BoomMove : MonoBehaviour
 {
@@ -16,11 +17,15 @@ public class BoomMove : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if(GetComponent<BeGleaned>()!=null)
+            GetComponent<BeGleaned>().enabled = false;
         //开启自动销毁线程
         StartCoroutine("Free");
     }
     public void data_initialize()
     {
+        UnityEngine.Debug.Log("move_on_x:" + move_on_x);
+        UnityEngine.Debug.Log("moveSpeed_x:" + moveSpeed_x);
         moveSpeed_x = move_on_x / ((Mathf.Sqrt(2 * move_height / vertical_acceleration))*2);
         moveSpeed_y = ((Mathf.Sqrt(2 * move_height / vertical_acceleration))) * vertical_acceleration;
     }
@@ -35,6 +40,7 @@ public class BoomMove : MonoBehaviour
         {
             transform.Translate(new Vector2(-Mathf.Abs(moveSpeed_x) * Time.deltaTime, moveSpeed_y*Time.deltaTime));
         }
+        UnityEngine.Debug.Log("炸弹速度:"+moveSpeed_x);
         moveSpeed_y -= vertical_acceleration * Time.deltaTime;
     }
 
@@ -49,15 +55,15 @@ public class BoomMove : MonoBehaviour
     /// <param name="collision"></param>
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.GetComponent<PlayerMove>() != null ||
-            collision.gameObject.GetComponent<RestoreObject>() != null)
+        if (collision.gameObject.tag!="ground")
         {
             return;
         }
-
-        moveSpeed_x = 0;
+        UnityEngine.Debug.Log(collision.transform.name);
+        /*moveSpeed_x = 0;
         moveSpeed_y = 0;
-        vertical_acceleration = 0;
-
+        vertical_acceleration = 0;*/
+        if (GetComponent<BeGleaned>() != null)
+            GetComponent<BeGleaned>().enabled = true;
     }
 }

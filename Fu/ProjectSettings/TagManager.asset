@@ -7,6 +7,7 @@ TagManager:
   - collider
   - Tree
   - Vine
+  - ground
   layers:
   - Default
   - TransparentFX

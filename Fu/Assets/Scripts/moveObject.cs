@@ -31,7 +31,7 @@ public class moveObject : MonoBehaviour
     public bool checkGround = true;     //是否进行地面检测
     public bool isGround = false;           //是否在地面
     public bool moveAble = true;            //是否可以移动
-    public bool face = true;               //是否面朝右边
+    public bool face = false;               //是否面朝右边
     public bool isJump = false;             //是否处于跳跃状态
     protected BoxCollider2D collider2D ;    //物体的碰撞器
     protected Rigidbody2D rig;              //物体的刚体
@@ -56,7 +56,7 @@ public class moveObject : MonoBehaviour
     /// </summary>
     private void FixedUpdate()
     {
-        if (isGround)
+        if (isGround && rig != null)
         {
             rig.sharedMaterial = p1;
         }
@@ -112,17 +112,21 @@ public class moveObject : MonoBehaviour
            
         }else if (direction == 0 && isGround)                   //松开按键且不在空中速度立即置0
         {
-            UnityEngine.Debug.Log("速度归零");
+           
             cur_move_speed = 0;
         }
-        UnityEngine.Debug.Log(direction);
+
         if (rig != null)
         {
             rig.velocity = (new Vector2(cur_move_speed, rig.velocity.y));
-            UnityEngine.Debug.Log("速度:"+moveSpeed);
+           
         }
             
         isGround = isGrounded();
+        
+           
+            
+        
     }
    
    
@@ -130,7 +134,7 @@ public class moveObject : MonoBehaviour
     /// 用三条射线判断角色是否在地面上
     /// </summary>
     /// <returns></returns>
-    bool isGrounded()
+    public bool isGrounded()
     {
         if (!checkGround)
         {
@@ -153,8 +157,13 @@ public class moveObject : MonoBehaviour
 
         if (hit1.collider != null || hit2.collider != null || hit3.collider != null)
         {
+            UnityEngine.Debug.Log("踩着:"+hit2.transform.name);
             isJump = false;
             return true;
+        }
+        else
+        {
+            UnityEngine.Debug.Log("脚下没有东西");
         }
         return false;
     }
