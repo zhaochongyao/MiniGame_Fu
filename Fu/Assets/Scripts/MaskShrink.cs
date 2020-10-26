@@ -28,5 +28,6 @@ public class MaskShrink : MonoBehaviour
             if(MaskRadius < this.transform.localScale.x)
             this.transform.localScale = new Vector3(MaskRadius, MaskRadius, 1);
         }
+        this.transform.position = this.transform.parent.transform.position;
     }
 }
