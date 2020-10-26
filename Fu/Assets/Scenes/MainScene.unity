@@ -485,7 +485,6 @@ MonoBehaviour:
   m_RequiresDepthTextureOption: 2
   m_RequiresOpaqueTextureOption: 2
   m_CameraType: 0
-  m_CameraOutput: 0
   m_Cameras: []
   m_RendererIndex: -1
   m_VolumeLayerMask:
@@ -497,6 +496,7 @@ MonoBehaviour:
   m_AntialiasingQuality: 2
   m_StopNaN: 0
   m_Dithering: 0
+  m_ClearDepth: 1
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
@@ -3438,7 +3438,6 @@ MonoBehaviour:
   m_RequiresDepthTextureOption: 2
   m_RequiresOpaqueTextureOption: 2
   m_CameraType: 0
-  m_CameraOutput: 1
   m_Cameras: []
   m_RendererIndex: -1
   m_VolumeLayerMask:
@@ -3450,6 +3449,7 @@ MonoBehaviour:
   m_AntialiasingQuality: 2
   m_StopNaN: 0
   m_Dithering: 0
+  m_ClearDepth: 1
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
@@ -4167,10 +4167,8 @@ GameObject:
   - component: {fileID: 276146700764115672}
   - component: {fileID: 276146700764115666}
   - component: {fileID: 276146700764115677}
-  - component: {fileID: 276146700764115670}
-  - component: {fileID: 276146700764115669}
   - component: {fileID: 276146700764115671}
-  - component: {fileID: 276146700764115673}
+  - component: {fileID: 276146700764115669}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -4185,46 +4183,14 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 276146700764115668}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bba267d53ecc18d42a624aba1437debe, type: 3}
+  m_Script: {fileID: 11500000, guid: 464eee5944f3b6b478f335bca561b279, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  p1: {fileID: 6200000, guid: 3dd915c0ca7693e41b3ef056db57a774, type: 2}
-  p2: {fileID: 6200000, guid: 6d6ff5adcf0a01946a06dd0205daa766, type: 2}
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 512
-  test_ground_Length: 1.2
-  max_MoveSpeed: 5
-  move_acceleration: 10
-  isGround: 0
-  moveAble: 1
-  face: 1
-  isJump: 0
-  jumpForce: 500
-  material: {fileID: 0}
-  gravity: 5
-  climbSpeed: 0
-  hanging: 1
-  test_upWall_length: 1
-  test_stair_length: 0.5
-  stairsLayer:
-    serializedVersion: 2
-    m_Bits: 256
-  isCrouch: 0
---- !u!114 &276146700764115670
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 276146700764115668}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ea1cc8c4c2a6c224694a37c5d4282b26, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  objects:
+  - {fileID: 1619064171731440922, guid: 593e0d3cea559cd42b0cbf36ef56d08e, type: 3}
+  max_throw_distance: 0
 --- !u!70 &276146700764115671
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -4254,23 +4220,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Speed: 7
---- !u!114 &276146700764115673
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 276146700764115668}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cc5f4d189d4d150439ca0782c33ec9ac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  objects:
-  - {fileID: 7425135966830169721, guid: e156f9fe2a4cb04438ca0e0cbdcbd4fe, type: 3}
-  - {fileID: 7425135966830169721, guid: e156f9fe2a4cb04438ca0e0cbdcbd4fe, type: 3}
-  - {fileID: 7425135966830169721, guid: e156f9fe2a4cb04438ca0e0cbdcbd4fe, type: 3}
-  objectNumber: 
 --- !u!95 &276146700764115677
 Animator:
   serializedVersion: 3
