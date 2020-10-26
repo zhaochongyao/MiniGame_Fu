@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 /// <summary>
@@ -16,6 +16,8 @@ public class MoveController : MonoBehaviour
     /// </summary>
     PlayerMove playerMove;
     gleaner glean;
+
+    bool GamePause = false;         //游戏是否暂停
     // Start is called before the first frame update
     void Start()
     {
@@ -27,23 +29,38 @@ public class MoveController : MonoBehaviour
     /// </summary>
     void CheckInput()
     {
+        if (GamePause)
+            return;
         float x = Input.GetAxis("Horizontal");
         float y = Input.GetAxis("Vertical");
         playerMove.walk(x,y);
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.K))
         {
             playerMove.jump();
         }
-        /*if (Input.GetKey(KeyCode.S))
+        if (Input.GetKey(KeyCode.S))
         {
             playerMove.crouch();
         }
         else 
         {
             playerMove.overCrouch();
-        }*/
-        ///更新部分
-        if (Input.GetKeyDown(KeyCode.J))
+        }
+        if (Input.GetKey(KeyCode.F))
+        {
+            playerMove.changeRunning(true);
+        }
+        else
+        {
+            playerMove.changeRunning(false);
+        }
+            ///更新部分
+            if (Input.GetKey(KeyCode.J))
+        {
+            glean.buildStrength();
+            
+        }
+        else if (Input.GetKeyUp(KeyCode.J))
         {
             glean.useObject(0);
         }

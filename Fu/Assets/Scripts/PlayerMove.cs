@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Diagnostics;
@@ -27,6 +27,9 @@ public class PlayerMove : moveObject
     /// <summary>
     /// 更新部分
     /// </summary>
+
+
+
     private Animator animator;          //动画控制器
     public float gravity = 5.0f;        //重力大小
     private Transform stairTransform;       //可以攀爬的梯子
@@ -34,8 +37,8 @@ public class PlayerMove : moveObject
     public float hanging = 1;    //1.无梯子 2.在梯子范围内  3.在梯子上
     public float test_upWall_length = 1f;    //向上检测墙壁的射线长度
     public float test_stair_length = 0.5f;  //检测左右楼梯的射线长度
-    private float walkSpeed;      //行走速度
-
+    
+   
     /// <summary>
     /// stairsLayer代表梯子层级,用于射线检测梯子
     /// </summary>
@@ -49,8 +52,7 @@ public class PlayerMove : moveObject
         original_y = transform.position.y;
         //更新部分
         base.init();
-        Animator[] ts = gameObject.GetComponentsInChildren<Animator>();
-        animator = ts[0];
+        animator = GetComponent<Animator>();
     }
     /// <summary>
     /// 检测是否有可以攀爬的梯子
@@ -59,10 +61,16 @@ public class PlayerMove : moveObject
     private void Update()
     {
         checkStairs();
-        Animation();
+        animator.SetBool("isJump",isJump);
+        animator.SetBool("isGround", isGround);
+        animator.SetInteger("Speed",Mathf.Abs(cur_move_speed) >0?(running?2:1):0);          //Speed 0-站立 1-行走 2-奔跑
         //更新部分
-        material.SetFloat("_XScrollLength", original_x-transform.position.x );
-        material.SetFloat("_YScrollLength", original_y - transform.position.y);
+        if (material != null)
+        {
+            material.SetFloat("_XScrollLength", original_x - transform.position.x);
+            material.SetFloat("_YScrollLength", original_y - transform.position.y);
+        }
+       
         //更新部分
     }
     /// <summary>
@@ -95,10 +103,17 @@ public class PlayerMove : moveObject
     /// 垂直移动方向
     public void walk(float direction_x,float direction_y)
     {
+        if (direction_x != 0)
+        {
+            animator.SetBool("isMove", true);
+        }
+        else
+        {
+            animator.SetBool("isMove", false);
+        }
         if (hanging!=3)
         {
             base.walk(direction_x);
-            walkSpeed = Mathf.Abs(direction_x);
             if (direction_y != 0 && hanging == 2 && isJump == false)       //当进行垂直移动且在梯子附近且未在跳跃状态可以进入梯子
             {
                 hanging = 3;
@@ -121,8 +136,10 @@ public class PlayerMove : moveObject
             if (!isCrouch)
             {
                 isCrouch = true;
+                UnityEngine.Debug.Log("蹲下");
                 collider2D.size = new Vector2(collider2D.size.x, collider2D.size.y / 2);
-                collider2D.offset = new Vector2(0, -(collider2D.size.y / 2));
+                collider2D.offset = collider2D.offset+new Vector2(0, -(collider2D.size.y / 2));
+                animator.SetBool("isCrouch", true);
             }
 
         }
@@ -143,7 +160,7 @@ public class PlayerMove : moveObject
         {
             isCrouch = false;
             collider2D.size = new Vector2(collider2D.size.x, collider2D.size.y * 2);
-            collider2D.offset = new Vector2(0, 0);
+            collider2D.offset = collider2D.offset - new Vector2(0, -(collider2D.size.y / 4));
             animator.SetBool("isCrouch", false);
         }
 
@@ -155,19 +172,18 @@ public class PlayerMove : moveObject
     /// </summary>
     public void jump()
     {
-        /*if ((isGround && !isCrouch)||hanging==3)
+        
+        if ((isGround && !isCrouch)||hanging==3)
         {
             if (hanging == 3)
             {
                 hanging = 2;
                 rig.gravityScale = gravity;
-                animator.SetBool("Climb", false);
             }
-            
+            closeGroundCheck();
             isJump = true;
             rig.AddForce(new Vector2(0, jumpForce));
-        }*/
-
+        }
     }
     /// <summary>
     /// 用射线检测蹲下时头上有无墙
@@ -227,23 +243,60 @@ public class PlayerMove : moveObject
         }
 
     }
-
     /// <summary>
-    /// 随时改变Animation
+    /// 更改播放的站立动画
     /// </summary>
-    void Animation()
+    public void changeIdle()
     {
-        if (isGround)
-            animator.SetBool("Jump", false);
-        else
-            animator.SetBool("Jump", true);
-        if (hanging == 3)
-            animator.SetBool("Climb", true);
-        if (isCrouch)
-            animator.SetBool("Crouch", true);
-        else
-            animator.SetBool("Crouch", false);
+        UnityEngine.Debug.Log("切换动作");
+        int debug = 0;
+        while (true)
+        {
+            if (animator.GetFloat("IDLE")==3)
+            {
+                animator.SetFloat("IDLE", 1);
+            }
+            else if (animator.GetFloat("IDLE") == 1)
+            {
+                animator.SetFloat("IDLE", 2);
+            }
+            else if (animator.GetFloat("IDLE") == 2)
+            {
+                animator.SetFloat("IDLE", 3);
+            }
 
-        animator.SetFloat("Walk", walkSpeed);
+            /*int a = Random.Range(0, 30);
+            float b;
+            if (a < 10)
+            {
+                b = 1f;
+            }
+            else if (a >= 10 && a < 20)
+            {
+                b = 2f;
+            }
+            //if (a < 30 && a >= 20)
+            else 
+            {
+                b = 3f;
+            }
+            if (b != animator.GetFloat("IDLE") || debug == 10)
+            {
+                animator.SetFloat("IDLE", b);
+                break;
+                
+            }
+            debug++; */
+            break;
+        }
+        
+    }
+    void closeGroundCheck()
+    {
+        checkGround = false;
+    }
+    public void openGroundCheck()
+    {
+        checkGround = true;
     }
 }
