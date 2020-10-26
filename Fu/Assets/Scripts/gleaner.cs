@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 /// <summary>
@@ -14,13 +14,24 @@ public class gleaner : MonoBehaviour
     /// <summary>
     /// 道具数量数组应与道具数组严格对齐
     /// </summary>
-    public int[] objectNumber;      //道具数量    
+    private int[] objectNumber;      //道具数量    
+
+    private float throw_distance = 0;     //投掷距离
+    public float max_throw_distance;      //最远投掷距离
     // Start is called before the first frame update
     void Start()
     {
         objectNumber = new int[objects.Length];
     }
-  
+    private void Update()
+    {
+        if (throw_distance != 0)
+        {
+            Vector2 p = transform.position;
+            UnityEngine.Debug.DrawRay(p+new Vector2(throw_distance,0),Vector2.up,Color.red);
+            
+        }
+    }
     /// <summary>
     /// 更新道具栏
     /// UI界面未知
@@ -38,7 +49,7 @@ public class gleaner : MonoBehaviour
     /// </param>
     public void gleanObject(int index)
     {
-        objectNumber[index]++;
+        objectNumber[index]+=3;
     }
     /// <summary>
     /// 使用道具
@@ -48,18 +59,28 @@ public class gleaner : MonoBehaviour
     /// </param>
     public void useObject(int index)
     {
+
         if (objectNumber[index] == 0)
             return;
         objectNumber[index]--;
         //道具使用过后的行为暂时空缺
         //用发出一个直线飞行的炸弹作为demo
         GameObject boom = Instantiate(objects[index], transform.position, Quaternion.identity) as GameObject;
-
-
-        Debug.Log("Player use object");
         if (boom.GetComponent<BoomMove>() != null)
         {
-            boom.GetComponent<BoomMove>().face = GetComponent<PlayerMove>().face;
+            BoomMove boomMove = boom.GetComponent<BoomMove>();
+            boomMove.face = GetComponent<PlayerMove>().face;
+            boomMove.move_on_x = throw_distance;
+            boomMove.data_initialize();
+            throw_distance = 0;
         }
+    }
+    //蓄力
+    public void buildStrength()
+    {
+        if (throw_distance < max_throw_distance)
+            throw_distance += max_throw_distance * Time.deltaTime;
+        else
+            throw_distance = max_throw_distance;
     }
 }

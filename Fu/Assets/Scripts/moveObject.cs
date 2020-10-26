@@ -25,22 +25,26 @@ public class moveObject : MonoBehaviour
     public float max_MoveSpeed = 5.0f;      //水平移动最大速度
     [Header("水平移动加速度")]
     public float move_acceleration = 10f;         //水平移动加速度
-    private float cur_move_speed = 0f;       //当前水平移动速度
-   
+    public float cur_move_speed = 0f;       //当前水平移动速度
+    protected bool running = false;         //是否在奔跑 
+
+    public bool checkGround = true;     //是否进行地面检测
     public bool isGround = false;           //是否在地面
     public bool moveAble = true;            //是否可以移动
     public bool face = true;               //是否面朝右边
     public bool isJump = false;             //是否处于跳跃状态
-    protected CapsuleCollider2D collider2D ;    //物体的碰撞器
+    protected BoxCollider2D collider2D ;    //物体的碰撞器
     protected Rigidbody2D rig;              //物体的刚体
-    public float jumpForce = 500.0f;        //起跳速度    
+    public float jumpForce = 500.0f;        //起跳速度            
+    
+
     /// <summary>
     /// 初始化组件
     /// </summary>
     public void init()
     {
         rig = GetComponent<Rigidbody2D>();
-        collider2D = GetComponent<CapsuleCollider2D>();
+        collider2D = GetComponent<BoxCollider2D>();
         if (rig == null && collider2D == null)
         {
             throw new System.Exception("缺失刚体或碰撞体");
@@ -56,9 +60,8 @@ public class moveObject : MonoBehaviour
         {
             rig.sharedMaterial = p1;
         }
-        if (!isGround)
+        if (!isGround&&rig!=null)
         {
-
             rig.sharedMaterial = p2;
         }
     }
@@ -84,7 +87,7 @@ public class moveObject : MonoBehaviour
             {
                 cur_move_speed = 0;
                 face = true;
-                transform.localScale = new Vector2(1f, 1f);
+                transform.localScale = new Vector2(-1f, 1f);
             }
            
         }
@@ -94,18 +97,31 @@ public class moveObject : MonoBehaviour
             {
                 cur_move_speed = 0;
                 face = false;
-                transform.localScale = new Vector2(-1f, 1f);
+                transform.localScale = new Vector2(1f, 1f);
             }
         }
-        if (direction != 0&&Mathf.Abs(cur_move_speed)<max_MoveSpeed&&moveAble)      //加速
+        if (direction != 0&&moveAble)      
         {
-            cur_move_speed = cur_move_speed + (face ? move_acceleration : -move_acceleration)*Time.deltaTime;
+            if(!running && Mathf.Abs(cur_move_speed) < max_MoveSpeed / 2)//非跑步加速
+            {
+                cur_move_speed = cur_move_speed + (face ? move_acceleration : -move_acceleration) * Time.deltaTime;
+            }else if (running && Mathf.Abs(cur_move_speed) < max_MoveSpeed)
+            {
+                cur_move_speed = cur_move_speed + (face ? move_acceleration : -move_acceleration) * Time.deltaTime;
+            }
+           
         }else if (direction == 0 && isGround)                   //松开按键且不在空中速度立即置0
         {
+            UnityEngine.Debug.Log("速度归零");
             cur_move_speed = 0;
         }
-        if (rig!=null)
-            rig.velocity = (new Vector2(moveSpeed, rig.velocity.y));
+        UnityEngine.Debug.Log(direction);
+        if (rig != null)
+        {
+            rig.velocity = (new Vector2(cur_move_speed, rig.velocity.y));
+            UnityEngine.Debug.Log("速度:"+moveSpeed);
+        }
+            
         isGround = isGrounded();
     }
    
@@ -116,8 +132,12 @@ public class moveObject : MonoBehaviour
     /// <returns></returns>
     bool isGrounded()
     {
+        if (!checkGround)
+        {
+            return true;
+        }
         //三条射线的起始点: 左边,中间,右边
-        Vector2 position1 = new Vector2(transform.position.x, transform.position.y - (collider2D.bounds.size.x / 2));
+        Vector2 position1 = transform.position;                                                     
         Vector2 position2 = new Vector2(position1.x - (collider2D.bounds.size.x / 2), position1.y);
         Vector2 position3 = new Vector2(position1.x + (collider2D.bounds.size.x / 2), position1.y);
         //使用Raycast函数向下检测是否触碰groundLayer层
@@ -138,5 +158,12 @@ public class moveObject : MonoBehaviour
         }
         return false;
     }
-   
+    public void changeRunning(bool running)
+    {
+        this.running = running;
+        if (!running &&Mathf.Abs(cur_move_speed)>max_MoveSpeed/2)
+        {
+            cur_move_speed = max_MoveSpeed / 2 * (face?1:-1);
+        }
+    }
 }
